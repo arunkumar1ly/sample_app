@@ -3,6 +3,9 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.9'
 gem 'bootstrap-sass', '2.1'
 gem 'bcrypt-ruby', '3.0.1' # to encrypt the password
+gem 'faker', '1.0.1'  # will allow us to make sample users with semi-realistic names and email addresses
+gem 'will_paginate', '3.0.3' #There are several pagination methods in Rails; we’ll use one of the simplest and most robust, called will_paginate.
+gem 'bootstrap-will_paginate', '0.0.6' # configures will_paginate to use Bootstrap’s pagination styles
 
 group :development, :test do
   gem 'sqlite3', '1.3.5'
