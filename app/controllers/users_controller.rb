@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
-	before_filter :signed_in_user, only: [:index, :edit, :update, :destroy] #arranges for a particular method to be called before the given actions.
+	before_filter :signed_in_user, only: [:index, :edit, :update, :destroy, :show] #arranges for a particular method to be called before the given actions.
   before_filter :correct_user, only: [:edit, :update]
   before_filter :admin_user, only: :destroy
-  before_filter :signout_for_new_user, only: [:new, :create]
+  before_filter :signed_out_user, only: [:new, :create]
   
   def show
 		@user = User.find(params[:id])
@@ -67,7 +67,7 @@ class UsersController < ApplicationController
       redirect_to(root_path) unless current_user.admin?
     end
 
-    def signout_for_new_user
+    def signed_out_user
       unless signed_out? 
         redirect_to root_url, notice: "Please sign out to create new Account"
       end      
