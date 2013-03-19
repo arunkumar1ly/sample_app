@@ -4,8 +4,12 @@ module SessionsHelper
     	self.current_user = user
   end
 
+  def current_user=(user)
+    @current_user = user
+  end
+
 	def current_user
-    @current_user ||= User.find_by_remember_token(cookies[:remember_token])
+    @current_user ||= User.find_by_remember_token(cookies[:remember_token]) #This practice of evaluating || expressions from left to right and stopping on the first true value is known as short-circuit evaluation.
   end
   
   def current_user?(user)
@@ -18,10 +22,6 @@ module SessionsHelper
       redirect_to signin_url, notice: "Please sign in."
     end
   end
-
-  def current_user=(user)
-    @current_user = user
-	end
 
   def signed_in?
     !current_user.nil?

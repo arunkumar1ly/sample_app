@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-	before_filter :signed_in_user, only: [:index, :edit, :update, :destroy, :show] #arranges for a particular method to be called before the given actions.
+	before_filter :signed_in_user, only: [:index, :edit, :update, :destroy, :show, :following, :followers] #arranges for a particular method to be called before the given actions.
   before_filter :correct_user, only: [:edit, :update]
   before_filter :admin_user, only: :destroy
   before_filter :signed_out_user, only: [:new, :create]
@@ -10,11 +10,11 @@ class UsersController < ApplicationController
 	end
 	
 	def new
-		@user = User.new
+		@user = User.new # Rails figures out that @user is of class User; moreover, since @user is a new user, Rails knows to construct a form with the post method, which is the proper verb for creating a new object
 	end
 
 	def create
-    	@user = User.new(params[:user])
+    	@user = User.new(params[:user]) # here params[:user] holds the params hash value from from_for @user in View
     	
     	if @user.save
     		sign_in @user
@@ -26,7 +26,7 @@ class UsersController < ApplicationController
  	end
 
   def edit
-    @user = User.find(params[:id])
+    @user = User.find(params[:id])#When constructing a form using form_for(@user), Rails uses POST if @user.new_record? is true and PUT if it is false.
   end
 
   def update
@@ -48,6 +48,20 @@ class UsersController < ApplicationController
     User.find(params[:id]).destroy
     flash[:success] = "User destroyed."
     redirect_to users_url
+  end
+ 
+  def following
+    @title = "Following"
+    @user = User.find(params[:id])
+    @users = @user.followed_users.paginate(page: params[:page])
+    render 'show_follow'
+  end
+
+  def followers
+    @title = "Followers"
+    @user = User.find(params[:id])
+    @users = @user.followers.paginate(page: params[:page])
+    render 'show_follow'
   end
 
   private
