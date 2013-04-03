@@ -26,7 +26,7 @@ class UsersController < ApplicationController
  	end
 
   def edit
-    @user = User.find(params[:id])#When constructing a form using form_for(@user), Rails uses POST if @user.new_record? is true and PUT if it is false.
+    @user = User.find(params[:id]) # When constructing a form using form_for(@user), Rails uses POST if @user.new_record? is true and PUT if it is false.
   end
 
   def update
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
       sign_in @user
       redirect_to @user
     else
-       render 'edit'
+      render 'edit'
     end
   end
 

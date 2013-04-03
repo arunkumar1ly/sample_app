@@ -1,5 +1,4 @@
 # == Schema Information
-#
 # Table name: microposts
 #
 #  id         :integer          not null, primary key
